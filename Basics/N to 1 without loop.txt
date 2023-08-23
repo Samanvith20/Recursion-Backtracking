@@ -1,0 +1,27 @@
+#include <vector>
+using namespace std;
+
+// This recursive function populates the vector 'ans' with numbers from 1 to 'x'.
+void Recursivefunction(int x, vector<int>& ans) {
+    // Base case: When x becomes 0 or negative, stop the recursion.
+    if (x <= 0) {
+        return;
+    }
+
+    // Push the current value of x into the vector 'ans'.
+    ans.push_back(x);
+
+    // Recursively call the function with x-1 to populate the vector with the numbers.
+    Recursivefunction(x - 1, ans);
+}
+
+// This function initializes the vector and starts the recursion process.
+vector<int> printNos(int x) {
+    vector<int> ans;
+
+    // Call the Recursivefunction to populate the vector 'ans'.
+    Recursivefunction(x, ans);
+
+    // Return the vector containing the populated numbers.
+    return ans;
+}

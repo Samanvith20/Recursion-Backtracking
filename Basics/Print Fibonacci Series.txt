@@ -1,0 +1,25 @@
+
+
+int generateFibonacciNumbers(int N) {
+if(N <= 1)
+   {
+       return N;
+   }
+
+   // Problem broken down into 2 functional calls
+   // and their results combined and returned.
+   int last = generateFibonacciNumbers(N-1);
+   int slast = generateFibonacciNumbers(N-2);
+   
+   return last + slast;
+
+}
+
+
+std::vector<int> generateFibonacciSeries(int n) {
+    std::vector<int> fibSeries;
+   
+        fibSeries.push_back(generateFibonacciNumbers(n));
+    
+    return fibSeries;
+}

@@ -1,0 +1,25 @@
+
+
+// Recursive function to reverse the array elements between 'start' and 'end' indices.
+void reverseArray(int start, int end, vector<int> &nums)
+{
+    // Base case: If 'end' is less than 'start', the array is already reversed.
+    if (start > end)
+        return;
+
+    // Swapping the elements at 'start' and 'end' indices.
+    swap(nums[start], nums[end]);
+
+    // Recursively call the function to reverse the remaining elements.
+    return reverseArray(start + 1, end - 1, nums);
+}
+
+// Function to reverse the elements of the given array 'nums'.
+vector<int> reverseArray(int n, vector<int> &nums)
+{
+    // Calling the recursive function to reverse the array.
+    reverseArray(0, n - 1, nums);
+
+    // Returning the reversed array.
+    return nums;
+}

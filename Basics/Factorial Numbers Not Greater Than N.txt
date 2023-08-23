@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>  // Required for sorting
+
+// Recursive function to calculate factorials
+long long FirstRecursion(long long n) {
+    if (n == 0 || n == 1) {
+        return 1;  // Factorial of 0 and 1 is 1
+    } else {
+        return n * FirstRecursion(n - 1);
+    }
+}
+
+// Function to calculate and sort factorial numbers not greater than n
+std::vector<long long> factorialNumbersNotGreaterThanN(long long n) {
+    std::vector<long long> factorialList; // Create a vector to store the factorial numbers
+    for (long long i = 1; ; ++i) {
+        long long factorial = FirstRecursion(i); // Calculate factorial using the recursive function
+        if (factorial <= n) {
+            factorialList.push_back(factorial); // Add the factorial to the vector if it's not greater than n
+        } else {
+            break; // Stop the loop if the factorial becomes greater than n
+        }
+    }
+    
+    std::sort(factorialList.begin(), factorialList.end()); // Sort the vector in ascending order
+    return factorialList; // Return the sorted vector of factorial numbers
+}

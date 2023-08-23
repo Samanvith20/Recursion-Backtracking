@@ -1,0 +1,17 @@
+#include <iostream>
+
+// Recursive function to calculate the sum of the first N natural numbers
+int FirstRecursion(long long n) {
+    if (n == 0) {
+        return 0;  // Base case: The sum of the first 0 natural numbers is 0
+    } else {
+        return n + FirstRecursion(n - 1);  // Recursive case: Add 'n' to the sum of first 'n-1' numbers
+    }
+}
+
+// Function to calculate and return the sum of the first N natural numbers
+long long sumFirstN(long long n) {
+    long long sum = FirstRecursion(n);  // Calculate the sum using the recursive function
+    
+    return sum;  // Return the calculated sum
+}
