@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Function to generate subsequences
+void generateSubsequence(int i, string s, string &f, vector<string> &result) {
+    if (i == s.length()) {
+        result.push_back(f); // Add the current subsequence to the result vector
+        return; // Base case: end of string reached
+    }
+    
+    // Picking the current character
+    f.push_back(s[i]); // Include the current character in the current subsequence
+    generateSubsequence(i + 1, s, f, result); // Recur for the next character
+    f.pop_back(); // Pop out the current character for backtracking
+    generateSubsequence(i + 1, s, f, result); // Recur without the current character
+}
+
+// Function to generate subsequences for a given string
+vector<string> generateSubsequences(string s) {
+    vector<string> result; // Vector to store generated subsequences
+    string f = ""; // Current subsequence being formed
+    generateSubsequence(0, s, f, result); // Start generating subsequences from index 0
+    return result; // Return the vector containing all subsequences
+}

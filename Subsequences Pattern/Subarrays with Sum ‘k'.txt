@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void subarraysWithSumK(int i, int k, vector<int>& currentResult, int s, vector<int>& a, int n, vector<vector<int>>& result) {
+    if (i == n) {
+        if (s == k) {
+            result.push_back(currentResult);
+        }
+        return;
+    }
+
+    currentResult.push_back(a[i]);
+    s += a[i];
+    subarraysWithSumK(i + 1, k, currentResult, s, a, n, result);
+    currentResult.pop_back();
+    s -= a[i];
+    subarraysWithSumK(i + 1, k, currentResult, s, a, n, result);
+}
+
+vector<vector<int>> subarraysWithSumK(vector<int> a, int k) {
+    vector<vector<int>> result;
+    vector<int> currentResult;
+    int s = 0;
+    
+    int n = a.size();
+    subarraysWithSumK(0, k, currentResult, s, a, n, result);
+    
+    return result;
+}

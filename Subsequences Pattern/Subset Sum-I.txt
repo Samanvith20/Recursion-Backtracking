@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>  // Include all standard C++ headers
+
+using namespace std;
+
+// Function to find all possible subset sums of the given array
+void subsetSum(int i, int n, vector<int> &sumsubset, vector<int> &num, int sum) {
+    // Base case: If we have considered all elements
+    if (i == n) {
+        sumsubset.push_back(sum);  // Add the current sum to the result vector
+        return;  // End this branch of recursion
+    }
+    
+    // Include the current element and move to the next index
+    subsetSum(i + 1, n, sumsubset, num, sum + num[i]);
+    
+    // Exclude the current element and move to the next index
+    subsetSum(i + 1, n, sumsubset, num, sum);
+}
+
+// Function to initiate subset sum search
+vector<int> subsetSum(vector<int> &num) {
+    int n = num.size();  // Get the size of the array
+    vector<int> sumsubset;  // To store subset sums
+    subsetSum(0, n, sumsubset, num, 0);  // Start the subset sum search
+    sort(sumsubset.begin(), sumsubset.end());  // Sort the results in ascending order
+    return sumsubset;  // Return the sorted subset sums
+}

@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Function to find combinations that sum up to the target B
+void combSum(int i, vector<int> &ARR, int B, vector<int> &ds, vector<vector<int>> &ans) {
+    if (i == ARR.size()) {
+        if (B == 0) {
+            ans.push_back(ds);  // Add the current combination to the answer
+            cout << endl;  // Print a new line to separate combinations
+        }
+        return;  // End this recursive branch
+    }
+
+    if (ARR[i] <= B) {
+        ds.push_back(ARR[i]);  // Include the current element in the combination
+        combSum(i, ARR, B - ARR[i], ds, ans);  // Recursive call with reduced target sum
+        ds.pop_back();  // Backtrack and try the next combination
+    }
+
+    combSum(i + 1, ARR, B, ds, ans);  // Recursive call without including the current element
+}
+
+// Function to initiate combination sum search
+vector<vector<int>> combinationSum(vector<int> &ARR, int B) {
+    vector<int> ds;  // Temporary combination container
+    vector<vector<int>> ans;  // Container for storing all found combinations
+    sort(ARR.begin(), ARR.end());  // Sort the input array for handling duplicates
+    combSum(0, ARR, B, ds, ans);  // Start the combination sum search
+    return ans;  // Return the collection of valid combinations
+}

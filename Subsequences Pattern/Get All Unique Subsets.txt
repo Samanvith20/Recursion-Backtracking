@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>  // Include the algorithm header for sort
+
+using namespace std;
+
+void getUniqueSubsets(int index, vector<int> &ds, vector<vector<int>> &ans, vector<int> &arr) {
+    ans.push_back(ds);  // Include the current subset in the answer
+    for (int i = index; i < arr.size(); i++) {
+        if (i != index && arr[i - 1] == arr[i])
+            continue;  // Skip duplicate elements
+        ds.push_back(arr[i]);  // Include the current element in the subset
+        getUniqueSubsets(i + 1, ds, ans, arr);  // Recursively find subsets with the remaining elements
+        ds.pop_back();  // Backtrack and exclude the current element
+    }
+}
+
+vector<vector<int>> getUniqueSubsets(vector<int> &arr) {
+    sort(arr.begin(), arr.end());  // Sort the input array
+    vector<int> ds;
+    vector<vector<int>> ans;
+    getUniqueSubsets(0, ds, ans, arr);  // Start the subset generation process
+    return ans;  // Return the list of unique subsets
+}
