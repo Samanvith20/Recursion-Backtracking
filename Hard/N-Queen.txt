@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>  // This line includes a set of common standard headers.
+
+using namespace std;  // This line brings the "std" namespace into scope, allowing you to use standard library components without prefixing them with "std::".
+
+class Solution {  // Defining a class named "Solution".
+public:  // Access specifier indicating that the following member functions and variables are accessible outside the class.
+    void solve(int col, vector<string> &board, vector<vector<string>> &ans, vector<int> &leftrow, vector<int> &upperDiagonal, vector<int> &lowerDiagonal, int n) {
+        // This function implements the backtracking algorithm to solve the N-Queens problem.
+        if (col == n) {  // Base case: If we've placed queens in all columns, we've found a solution.
+            ans.push_back(board);  // Add the current board configuration to the list of solutions.
+            return;  // Exit the function.
+        }
+        // Loop over each row and try placing a queen in the current column.
+        for (int row = 0; row < n; row++) {
+            // Check if placing a queen in the current cell is valid based on row and diagonals.
+            if (leftrow[row] == 0 && lowerDiagonal[row + col] == 0 && upperDiagonal[n - 1 + col - row] == 0) {
+                board[row][col] = 'Q';  // Place a queen in the current cell.
+                leftrow[row] = 1;  // Mark the row as occupied by a queen.
+                lowerDiagonal[row + col] = 1;  // Mark the lower diagonal as occupied.
+                upperDiagonal[n - 1 + col - row] = 1;  // Mark the upper diagonal as occupied.
+                
+                // Recur to the next column to place queens.
+                solve(col + 1, board, ans, leftrow, upperDiagonal, lowerDiagonal, n);
+                
+                board[row][col] = '.';  // Backtrack: Remove the queen from the current cell.
+                leftrow[row] = 0;  // Unmark the row.
+                lowerDiagonal[row + col] = 0;  // Unmark the lower diagonal.
+                upperDiagonal[n - 1 + col - row] = 0;  // Unmark the upper diagonal.
+            }
+        }
+    }
+
+public:  // Access specifier for the public members.
+    vector<vector<string>> solveNQueens(int n) {
+        // This function initializes the solving process for the N-Queens problem.
+        vector<vector<string>> ans;  // Store the solutions.
+        vector<string> board(n);  // Represents the current state of the board.
+        string s(n, '.');  // Initialize a string of '.' characters.
+        
+        for (int i = 0; i < n; i++) {
+            board[i] = s;  // Initialize each row of the board with '.' characters.
+        }
+
+        vector<int> leftrow(n, 0), upperDiagonal(2 * n - 1, 0), lowerDiagonal(2 * n - 1, 0);
+        // Arrays to keep track of occupied rows and diagonals.
+
+        solve(0, board, ans, leftrow, upperDiagonal, lowerDiagonal, n);  // Start solving from the first column.
+
+        return ans;  // Return the solutions.
+    }
+};

@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+bool isSafe(int node, int color[], bool graph[101][101], int n, int col) {
+    for (int k = 0; k < n; k++) {
+        if (k != node && graph[k][node] == 1 && color[k] == col) {
+            return false; // If adjacent node has the same color, return false
+        }
+    }
+    return true; // No conflict found, it's safe to assign the color
+}
+
+bool solve(int node, int color[], int m, int N, bool graph[101][101]) {
+    if (node == N) {
+        return true; // All nodes are assigned colors, solution found
+    }
+
+    for (int i = 1; i <= m; i++) {
+        if (isSafe(node, color, graph, N, i)) {
+            color[node] = i; // Assign color i to the current node
+            if (solve(node + 1, color, m, N, graph))
+                return true; // Recursively solve for the next node
+            color[node] = 0; // Backtrack: reset color assignment
+        }
+    }
+    return false; // No color assignment possible for the current node
+}
+
+bool graphColoring(bool graph[101][101], int m, int N) {
+    int color[N] = {0}; // Initialize an array to store node colors
+    if (solve(0, color, m, N, graph))
+        return true; // If a valid coloring is possible, return true
+    return false; // No valid coloring found, return false
+}

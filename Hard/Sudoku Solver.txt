@@ -1,0 +1,48 @@
+#include <vector>
+using namespace std;
+
+bool isValid(vector<vector<int>>& board, int row, int col, int num) {
+    // Loop through rows, columns, and subgrids to check for conflicts
+    for (int i = 0; i < 9; i++) {
+        // Check if the same num exists in the same column
+        if (board[i][col] == num)
+            return false;
+
+        // Check if the same num exists in the same row
+        if (board[row][i] == num)
+            return false;
+
+        // Check if the same num exists in the 3x3 subgrid
+        if (board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == num)
+            return false;
+    }
+    // If no conflicts found, return true
+    return true;
+}
+
+bool sudokuSolver(vector<vector<int>>& board) {
+    // Iterate through each cell of the Sudoku board
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            // Check if the cell is empty
+            if (board[i][j] == 0) {
+                // Try placing numbers 1 to 9 in the empty cell
+                for (int num = 1; num <= 9; num++) {
+                    // Check if placing the current num is valid
+                    if (isValid(board, i, j, num)) {
+                        // Place the num temporarily
+                        board[i][j] = num;
+
+                        // Recursively solve the remaining board
+                        if (sudokuSolver(board))
+                            return true;  // If a solution is found, return true
+                        else
+                            board[i][j] = 0;  // If not a valid solution, backtrack
+                    }
+                }
+                return false;  // No valid number can be placed, backtrack
+            }
+        }
+    }
+    return true;  // All cells are filled, Sudoku is solved
+}

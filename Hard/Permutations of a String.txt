@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Function to generate permutations recursively
+void generatePermutationsHelper(string &str, vector<string> &f, vector<string> &ans, vector<bool> &used) {
+    // Base case: If a complete permutation is formed
+    if (f.size() == str.size()) {
+        ans.push_back(f.back());  // Add the permutation to the result vector
+        return;  // Return from the function
+    }
+
+    // Loop through each character in the input string
+    for (int i = 0; i < str.size(); i++) {
+        // Check if the current character is not used in the permutation
+        if (!used[i]) {
+            // Add the current character to the temporary permutation vector 'f'
+            f.push_back(string(1, str[i]));  // Create a string with the current character
+            used[i] = true;  // Mark the character as used
+
+            // Recursively call the function to generate permutations for the remaining characters
+            generatePermutationsHelper(str, f, ans, used);
+
+            used[i] = false;  // Backtrack: Mark the character as unused
+            f.pop_back();     // Backtrack: Remove the last character from 'f'
+        }
+    }
+}
+
+// Function to generate and return permutations
+vector<string> generatePermutations(string &str) {
+    vector<string> f;                    // Temporary vector to store permutations in progress
+    vector<string> ans;                  // Vector to store the final permutations
+    vector<bool> used(str.size(), false); // Vector to track characters used in permutations
+
+    // Call the helper function to generate permutations
+    generatePermutationsHelper(str, f, ans, used);
+
+    // Sort the permutations in lexicographical order
+    sort(ans.begin(), ans.end());
+
+    return ans;  // Return the sorted permutations
+}

@@ -1,0 +1,33 @@
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Function to generate permutations recursively
+void generatePermutations(vector<string> &ans, int index, string &str) {
+    // Base case: If the index reaches the end of the string
+    if (index == str.size()) {
+        ans.push_back(str);  // Add the current permutation to the result vector
+        return;              // Return from the function
+    }
+
+    // Loop through characters from 'index' to the end of the string
+    for (int i = index; i < str.size(); i++) {
+        // Swap characters at 'index' and 'i'
+        swap(str[index], str[i]);
+
+        // Recursively call the function for the next index
+        generatePermutations(ans, index + 1, str);
+
+        // Backtrack by swapping characters again
+        swap(str[index], str[i]);
+    }
+}
+
+// Function to generate and return sorted permutations
+vector<string> generatePermutations(string &str) {
+    vector<string> ans;  // Vector to store the generated permutations
+    generatePermutations(ans, 0, str);  // Start generating permutations from index 0
+    sort(ans.begin(), ans.end());       // Sort the permutations in lexicographical order
+    return ans;  // Return the sorted permutations
+}
